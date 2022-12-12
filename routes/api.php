@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\DesignController;
+use App\Http\Controllers\Api\DomainController;
+use App\Http\Controllers\Api\HostingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource("design", DesignController::class);
+Route::apiResource("hosting", HostingController::class);
+Route::apiResource("domain", DomainController::class);

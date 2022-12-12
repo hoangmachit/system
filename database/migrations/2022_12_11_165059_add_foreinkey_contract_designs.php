@@ -13,8 +13,9 @@ class AddForeinkeyContractDesigns extends Migration
      */
     public function up()
     {
-        Schema::table('designs', function (Blueprint $table) {
+        Schema::table('contract_designs', function (Blueprint $table) {
             $table->foreignId('contract_id')->constrained('contracts');
+            $table->foreignId('design_id')->constrained('designs');
         });
     }
 
@@ -25,8 +26,9 @@ class AddForeinkeyContractDesigns extends Migration
      */
     public function down()
     {
-        Schema::table('designs', function (Blueprint $table) {
+        Schema::table('contract_designs', function (Blueprint $table) {
             $table->dropForeign(['contract_id']);
+            $table->dropForeign(['design_id']);
         });
     }
 }

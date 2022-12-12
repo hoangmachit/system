@@ -17,7 +17,6 @@ class Designs extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'contract_id',
         'first_name',
         'last_name',
         'url',
@@ -32,8 +31,5 @@ class Designs extends Model
     ];
     public function full_name(){
         return $this->first_name." ".$this->last_name;
-    }
-    public function contracts(){
-        return $this->hasOne(Contracts::class,'id','contract_id');
     }
 }

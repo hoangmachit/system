@@ -1,83 +1,57 @@
 <?php
-
-namespace App\Helpers;
-
-
-
-use Carbon\Carbon;
-use GuzzleHttp\Psr7\Header;
-
-class Helpers
-
-{
-
-    public function formatDate($date,$format)
-
+if (!function_exists('sendResponse')) {
+    /**
+     * success response method.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function sendResponse($result, $message)
     {
-
-        return Carbon::parse($date)->format($format);
-
+        $response = [
+            'success' => true,
+            'data'    => $result,
+            'message' => $message,
+        ];
+        return response()->json($response, 200);
     }
-
-    public function replaceYear($search,$replace,$string)
-
-    {
-
-        return str_replace($search,$replace,$string);
-
-    }
-
-    public function formatPrice($price)
-
-    {
-
-        return number_format($price,0,",",".");
-
-    }
-
-    public function formatRound($round)
-
-    {
-
-        return round($round,2);
-
-    }
-
-    public function replacePrice($price = '')
-
-    {
-
-        if(is_null($price) || $price != '')
-
-        {
-
-           $price = str_replace(',','',$price);
-
-           return $price;
-
-        }
-
-        return 0;
-
-    }
-
-    public function generateRandomString($length = 10) {
-
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-        $charactersLength = strlen($characters);
-
-        $randomString = '';
-
-        for ($i = 0; $i < $length; $i++) {
-
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-
-        }
-
-        return $randomString;
-
-    }
-
 }
-?>
+if (!function_exists('sendError')) {
+    /**
+     * Return error response.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function sendError($error, $errorMessages = [], $code = 404)
+    {
+        $response = [
+            'success' => false,
+            'message' => $error,
+        ];
+        if (!empty($errorMessages)) {
+            $response['data'] = $errorMessages;
+        }
+        return response()->json($response, $code);
+    }
+}
+if (!function_exists('generateRandomString')) {
+    /**
+     * Return random string.
+     *
+     */
+    function generateRandomString($length = 10)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+}
+if (!function_exists('photo')) {
+    function photo($photo = "")
+    {
+        return config('app.url') . "/uploads/" . $photo;
+    }
+}

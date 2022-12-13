@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeinkeyContractCancels extends Migration
+class AddForeinkeyContractHosting extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddForeinkeyContractCancels extends Migration
      */
     public function up()
     {
-        Schema::table('contract_cancels', function (Blueprint $table) {
+        Schema::table('contract_hostings', function (Blueprint $table) {
             $table->foreignId('contract_id')->constrained('contracts');
-            $table->foreignId('cancel_id')->constrained('cancels');
+            $table->foreignId('hosting_id')->constrained('hostings');
         });
     }
 
@@ -26,9 +26,9 @@ class AddForeinkeyContractCancels extends Migration
      */
     public function down()
     {
-        Schema::table('contract_cancels', function (Blueprint $table) {
+        Schema::table('contract_hostings', function (Blueprint $table) {
             $table->dropForeign(['contract_id']);
-            $table->dropForeign(['cancel_id']);
+            $table->dropForeign(['hosting_id']);
         });
     }
 }

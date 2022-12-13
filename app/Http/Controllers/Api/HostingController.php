@@ -15,10 +15,11 @@ class HostingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $hostings = Hostings::all();
-        return sendResponse(HostingResource::collection($hostings), "Hosting retrieved successfully.");
+        $page = $request->page ?? config('page.hosting');
+        $hostings = Hostings::paginate($page);
+        return sendResponse(new HostingResource($hostings), "Hosting retrieved successfully.");
     }
 
     /**

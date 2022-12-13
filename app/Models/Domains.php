@@ -19,7 +19,7 @@ class Domains extends Model
         'name',
         'domain_name',
         'address',
-        'production_unit',
+        'domain_init_id',
         'note',
         'price',
         'price_special',

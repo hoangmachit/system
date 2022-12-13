@@ -24,7 +24,7 @@ class CreateContractsTable extends Migration
             $table->date('date_payment_1st')->nullable();
             $table->date('date_payment_2st')->nullable();
             $table->text('note')->nullable();
-            $table->string('status',255)->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

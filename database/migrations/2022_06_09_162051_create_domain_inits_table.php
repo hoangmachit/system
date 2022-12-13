@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHostingsTable extends Migration
+class CreateDomainInitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,13 @@ class CreateHostingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('hostings', function (Blueprint $table) {
+        Schema::create('domain_inits', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255)->nullable();
-            $table->double('gb', 12, 2)->nullable();
-            $table->double('ram', 12, 2)->nullable();
-            $table->string('ip', 255)->nullable();
+            $table->string('origin', 255)->nullable();
+            $table->string('url', 255)->nullable();
             $table->text('note', 1000)->nullable();
-            $table->double('price', 12, 2)->default(0);
-            $table->double('price_special', 12, 2)->default(0);
-            $table->integer('status')->default(0);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -35,6 +30,6 @@ class CreateHostingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hostings');
+        Schema::dropIfExists('domain_inits');
     }
 }

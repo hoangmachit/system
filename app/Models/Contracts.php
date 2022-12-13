@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Domains;
-use App\Models\Hostings;
-use App\Models\CustomerContracts;
+use App\Models\ContractsCustomer;
 use App\Models\ContractPrices;
+use App\Models\ContractCancels;
+use App\Models\ContractDesigns;
+use App\Models\ContractDomains;
+use App\Models\ContractHostings;
 
 class Contracts extends Model
 {
@@ -30,23 +32,29 @@ class Contracts extends Model
         'date_payment_2st',
         'note',
         'status',
-        'domain_id',
-        'hosting_id',
     ];
-    public function domain()
+    public function designs()
     {
-        return $this->hasOne(Domains::class,'id','domain_id');
+        return $this->hasMany(ContractDesigns::class, 'contract_id', 'id');
     }
-    public function hosting()
+    public function domains()
     {
-        return $this->hasOne(Hostings::class,'id','hosting_id');
+        return $this->hasMany(ContractDomains::class, 'contract_id', 'id');
     }
-    public function customer_contracts()
+    public function hostings()
     {
-        return $this->hasOne(CustomerContracts::class,'contract_id','id');
+        return $this->hasMany(ContractHostings::class, 'contract_id', 'id');
     }
-    public function contract_price()
+    public function cancels()
     {
-        return $this->hasOne(ContractPrices::class,'contract_id','id');
+        return $this->hasMany(ContractCancels::class, 'contract_id', 'id');
+    }
+    public function customers()
+    {
+        return $this->hasMany(ContractsCustomer::class, 'contract_id', 'id');
+    }
+    public function prices()
+    {
+        return $this->hasMany(ContractPrices::class, 'contract_id', 'id');
     }
 }

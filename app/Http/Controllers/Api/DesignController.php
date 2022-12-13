@@ -15,10 +15,11 @@ class DesignController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $designs = Designs::all();
-        return sendResponse(DesignResource::collection($designs), "Design retrieved successfully.");
+        $page = $request->page ?? config('page.design');
+        $designs = Designs::paginate($page);
+        return sendResponse(new DesignResource($designs), "Design retrieved successfully.");
     }
 
     /**

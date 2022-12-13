@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeinkeyContractDomainHosting extends Migration
+class AddForeinkeyContractDomain extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddForeinkeyContractDomainHosting extends Migration
      */
     public function up()
     {
-        Schema::table('contracts', function (Blueprint $table) {
+        Schema::table('contract_domains', function (Blueprint $table) {
+            $table->foreignId('contract_id')->constrained('contracts');
             $table->foreignId('domain_id')->constrained('domains');
-            $table->foreignId('hosting_id')->constrained('hostings');
         });
     }
 
@@ -26,9 +26,9 @@ class AddForeinkeyContractDomainHosting extends Migration
      */
     public function down()
     {
-        Schema::table('contracts', function (Blueprint $table) {
+        Schema::table('contract_domains', function (Blueprint $table) {
+            $table->dropForeign(['contract_id']);
             $table->dropForeign(['domain_id']);
-            $table->dropForeign(['hosting_id']);
         });
     }
 }

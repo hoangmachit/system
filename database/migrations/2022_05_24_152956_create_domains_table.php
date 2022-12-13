@@ -15,16 +15,16 @@ class CreateDomainsTable extends Migration
     {
         Schema::create('domains', function (Blueprint $table) {
             $table->id();
-            $table->string('name',255)->nullable();
-            $table->string('domain_name',255)->nullable();
-            $table->string('address',255)->nullable();
-            $table->string('production_unit',255)->nullable();
-            $table->text('note',1000)->nullable();
-            $table->double('price')->default(0);
-            $table->double('price_special')->default(0);
+            $table->string('name', 255)->nullable();
+            $table->string('domain_name', 255)->nullable();
+            $table->string('address', 255)->nullable();
+            $table->integer('domain_init_id')->default(0);
+            $table->text('note', 1000)->nullable();
+            $table->double('price', 12, 2)->default(0);
+            $table->double('price_special', 12, 2)->default(0);
             $table->date('date_payment')->nullable();
-            $table->string('year',255)->nullable();
-            $table->string('status',255)->nullable();
+            $table->double('year', 4, 1)->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

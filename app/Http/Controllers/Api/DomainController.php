@@ -15,10 +15,11 @@ class DomainController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $domain = Domains::all();
-        return sendResponse(DomainResource::collection($domain), "Domain retrieved successfully.");
+        $page = $request->page ?? config('page.domain');
+        $domain = Domains::paginate($page);
+        return sendResponse(new DomainResource($domain), "Domain retrieved successfully.");
     }
 
     /**

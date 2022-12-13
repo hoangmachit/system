@@ -28,7 +28,7 @@ class CreateContractCustomersTable extends Migration
             $table->string('zalo',14)->nullable();
             $table->string('fax',14)->nullable();
             $table->text('note',1000)->nullable();
-            $table->string('status',255)->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

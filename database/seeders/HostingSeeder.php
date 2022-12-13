@@ -51,6 +51,18 @@ class HostingSeeder extends Seeder
                 'status' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => 'Package Hosting D',
+                'gb' => 3 * 1024,
+                'ram' => 3 * 1024,
+                'ip' => '192.168.1.56',
+                'note' => "Desc Hosting D",
+                'price' => 4500000,
+                'price_special' => 64000000,
+                'status' => 1,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]
         ];
         foreach ($hostings as $key => $item) {

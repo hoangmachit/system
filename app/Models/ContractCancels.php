@@ -19,4 +19,8 @@ class ContractCancels extends Model
         'cancel_id',
         'note',
     ];
+    public function cancels()
+    {
+        return $this->hasOne(Cancels::class, 'id', 'cancel_id');
+    }
 }

@@ -12,4 +12,8 @@ class ContractDesigns extends Model
         'contract_id',
         'design_id'
     ];
+    public function designs()
+    {
+        return $this->hasOne(Designs::class, 'id', 'design_id');
+    }
 }

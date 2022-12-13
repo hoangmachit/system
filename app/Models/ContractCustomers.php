@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ContractsCustomer extends Model
+class ContractCustomers extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -31,9 +31,10 @@ class ContractsCustomer extends Model
         'zalo',
         'fax',
         'note',
+        'status'
     ];
-    public function full_name()
+    public function customers()
     {
-        return $this->last_name . " " .$this->first_name;
+        return $this->hasOne(Customers::class, 'id', 'customer_id');
     }
 }

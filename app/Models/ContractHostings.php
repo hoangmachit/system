@@ -12,4 +12,8 @@ class ContractHostings extends Model
         'contract_id',
         'hosting_id'
     ];
+    public function hostings()
+    {
+        return $this->hasOne(Hostings::class, 'id', 'hosting_id');
+    }
 }

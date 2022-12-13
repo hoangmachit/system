@@ -12,4 +12,8 @@ class ContractDomains extends Model
         'contract_id',
         'domain_id'
     ];
+    public function domains()
+    {
+        return $this->hasOne(Domains::class, 'id', 'domain_id');
+    }
 }

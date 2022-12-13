@@ -57,6 +57,20 @@ class DesignSeeder extends Seeder
                 'code' => 'DESIGN003',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+            ],
+            [
+                'first_name' => 'Nguyễn Văn',
+                'last_name' => ' Design 04',
+                'url' => 'https://design.com/detail/04',
+                'note' => 'My note design 04',
+                'date_start' => Carbon::now(),
+                'date_finish' => Carbon::now(),
+                'font_family' => 'Arial, Time',
+                'status' => 1,
+                'photo' => 'design_04.jpg',
+                'code' => 'DESIGN004',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]
         ];
         foreach ($designs as $key => $item) {

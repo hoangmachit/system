@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             DesignSeeder::class,
             DomainSeeder::class,
             HostingSeeder::class,
+            CustomerSeeder::class,
             ContractSeeder::class
         ]);
     }

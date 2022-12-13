@@ -10,7 +10,7 @@ use App\Http\Resources\Api\ContractResource;
 // use App\Models\ContractCancels;
 // use App\Models\ContractPrices;
 // use App\Models\ContractDesigns;
-// use App\Models\ContractsCustomer;
+// use App\Models\ContractCustomers;
 
 class ContractController extends Controller
 {

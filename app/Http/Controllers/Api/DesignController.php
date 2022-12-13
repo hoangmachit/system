@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DesignResource;
+use App\Http\Traits\UploadPhoto;
 use App\Models\Designs;
 use Validator;
 
 class DesignController extends Controller
 {
+    use UploadPhoto;
     /**
      * Display a listing of the resource.
      *
@@ -48,6 +50,7 @@ class DesignController extends Controller
         }
         $data['font_family'] = !empty($data['font_family']) ? $data['font_family'] : "";
         $data['url_example'] = !empty($data['url_example']) ? $data['url_example'] : "";
+        $data['photo']       = UploadPhoto::uploadPhoto($request);
         $data['code'] = generateRandomString();
         $design = Designs::create($data);
         return sendResponse(new DesignResource($design), 'Design created successfully.');

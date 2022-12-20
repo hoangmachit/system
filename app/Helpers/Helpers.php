@@ -9,7 +9,7 @@ if (!function_exists('sendResponse')) {
     {
         $response = [
             'success' => true,
-            'data'    => $result,
+            'result'    => $result,
             'message' => $message,
         ];
         return response()->json($response, 200);

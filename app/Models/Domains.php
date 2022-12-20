@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\DomainInits;
+use App\Models\Status;
 
 class Domains extends Model
 {
@@ -27,4 +29,8 @@ class Domains extends Model
         'year',
         'status',
     ];
+    public function domain_init()
+    {
+        return $this->hasOne(DomainInits::class, 'id', 'domain_init_id');
+    }
 }

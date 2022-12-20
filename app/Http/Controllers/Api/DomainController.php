@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DomainResource;
 use App\Models\Domains;
+use App\Models\DomainInits;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -17,9 +18,15 @@ class DomainController extends Controller
      */
     public function index(Request $request)
     {
-        $page = $request->page ?? config('page.domain');
-        $domain = Domains::paginate($page);
-        return sendResponse(new DomainResource($domain), "Domain retrieved successfully.");
+        $domains = Domains::with('domain_init')->get();
+        $domain_init =  DomainInits::all();
+        return sendResponse(
+            [
+                'domains' => $domains,
+                'domain_init' => $domain_init
+            ],
+            "Domain retrieved successfully."
+        );
     }
 
     /**
@@ -40,7 +47,7 @@ class DomainController extends Controller
             'name'           => 'required',
             'domain_name'    => 'required',
             'address'        => 'required',
-            'production_unit' => 'required',
+            'domain_init_id' => 'required',
             'note'           => 'required',
             'price'          => 'required',
             'price_special'  => 'required',
@@ -76,10 +83,14 @@ class DomainController extends Controller
     public function show($id)
     {
         $domain = Domains::find($id);
-        if (empty($hosting)) {
-            return $this->sendError('Domain not found.');
+        if (empty($domain)) {
+            return sendError('Domain not found.');
         }
-        return sendResponse(new DomainResource($hosting), 'Domain retrieved successfully.');
+        $domain_init = DomainInits::all();
+        return sendResponse([
+            'domain' => $domain,
+            'domain_init' => $domain_init
+        ], 'Domain retrieved successfully.');
     }
 
     /**

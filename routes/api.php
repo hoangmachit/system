@@ -4,8 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\DesignController;
 use App\Http\Controllers\Api\DomainController;
+use App\Http\Controllers\Api\DomainInitController;
 use App\Http\Controllers\Api\HostingController;
 use App\Http\Controllers\Api\ContractController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,4 +26,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource("design", DesignController::class);
 Route::apiResource("hosting", HostingController::class);
 Route::apiResource("domain", DomainController::class);
+Route::apiResource("domain_init", DomainInitController::class);
 Route::apiResource("contract", ContractController::class);

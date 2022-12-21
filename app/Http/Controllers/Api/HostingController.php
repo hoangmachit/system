@@ -17,9 +17,13 @@ class HostingController extends Controller
      */
     public function index(Request $request)
     {
-        $page = $request->page ?? config('page.hosting');
-        $hostings = Hostings::paginate($page);
-        return sendResponse(new HostingResource($hostings), "Hosting retrieved successfully.");
+        $hostings = Hostings::orderBy('id', 'asc')->get();
+        return sendResponse(
+            [
+                'hostings' => $hostings
+            ],
+            "Hosting retrieved successfully."
+        );
     }
 
     /**
@@ -59,7 +63,7 @@ class HostingController extends Controller
         $roles  = $this->roles();
         $validator = Validator::make($data, $roles);
         if ($validator->fails()) {
-            return sendError('Validation Error.', $validator->errors());
+            return sendError('Validation Error.', $validator->errors(), 200);
         }
         $hosting = Hostings::create($data);
         return sendResponse(new HostingResource($hosting), 'Hosting created successfully.');
@@ -104,7 +108,7 @@ class HostingController extends Controller
         $roles  = $this->roles();
         $validator = Validator::make($data, $roles);
         if ($validator->fails()) {
-            return sendError('Validation Error.', $validator->errors());
+            return sendError('Validation Error.', $validator->errors(), 200);
         }
         $hosting->name           = !empty($data['name']) ? $data['name'] : "";
         $hosting->gb             = !empty($data['gb'])  ? $data['gb'] : "";

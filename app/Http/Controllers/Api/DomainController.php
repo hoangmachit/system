@@ -18,7 +18,7 @@ class DomainController extends Controller
      */
     public function index(Request $request)
     {
-        $domains = Domains::with('domain_init')->get();
+        $domains = Domains::orderBy('id', 'desc')->with('domain_init')->get();
         $domain_init =  DomainInits::all();
         return sendResponse(
             [
@@ -47,13 +47,12 @@ class DomainController extends Controller
             'name'           => 'required',
             'domain_name'    => 'required',
             'address'        => 'required',
-            'domain_init_id' => 'required',
-            'note'           => 'required',
-            'price'          => 'required',
-            'price_special'  => 'required',
+            'domain_init_id' => 'required|integer',
+            'price'          => 'required|integer',
+            'price_special'  => 'required|integer',
             'date_payment'   => 'date',
             'year'           => 'integer',
-            'status'         => 'required'
+            'status'         => 'required|integer'
         ];
     }
     /**
@@ -64,13 +63,13 @@ class DomainController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        $domain = $request->get('domain');
         $roles  = $this->roles();
-        $validator = Validator::make($data, $roles);
+        $validator = Validator::make($domain, $roles);
         if ($validator->fails()) {
-            return sendError('Validation Error.', $validator->errors());
+            return sendError('Validation Error.', $validator->errors(), 200);
         }
-        $domain = Domains::create($data);
+        $domain = Domains::create($domain);
         return sendResponse(new DomainResource($domain), 'Domain created successfully.');
     }
 
@@ -117,20 +116,20 @@ class DomainController extends Controller
         $roles  = $this->roles();
         $validator = Validator::make($data, $roles);
         if ($validator->fails()) {
-            return sendError('Validation Error.', $validator->errors());
+            return sendError('Validation Error.', $validator->errors(), 200);
         }
-        $domain->name             = !empty($data['name']) ? $data['name'] : "";
-        $domain->domain_name      = !empty($data['domain_name'])  ? $data['domain_name'] : "";
-        $domain->address          = !empty($data['address'])  ? $data['address'] : "";
-        $domain->production_unit  = !empty($data['production_unit'])  ? $data['production_unit'] : "";
-        $domain->note             = !empty($data['note'])  ? $data['note'] : "";
+        $domain->name             = !empty($data['name']) ? $data['name'] : null;
+        $domain->domain_name      = !empty($data['domain_name'])  ? $data['domain_name'] : null;
+        $domain->address          = !empty($data['address'])  ? $data['address'] : null;
+        $domain->domain_init_id  = !empty($data['domain_init_id'])  ? $data['domain_init_id'] : null;
+        $domain->note             = !empty($data['note'])  ? $data['note'] : null;
         $domain->price            = !empty($data['price'])  ? $data['price'] : 0;
         $domain->price_special    = !empty($data['price_special'])  ? $data['price_special'] : 0;
-        $domain->date_payment     = !empty($data['date_payment'])  ? $data['date_payment'] : 0;
+        $domain->date_payment     = !empty($data['date_payment'])  ? $data['date_payment'] : null;
         $domain->year             = !empty($data['year'])  ? $data['year'] : 0;
         $domain->status           = !empty($data['status'])  ? $data['status'] : 0;
         $domain->save();
-        return sendResponse(new DomainResource($domain), 'Domain updated successfully.');
+        return sendResponse($domain, 'Domain updated successfully.');
     }
 
     /**

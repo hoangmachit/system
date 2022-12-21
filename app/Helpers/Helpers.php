@@ -28,7 +28,7 @@ if (!function_exists('sendError')) {
             'message' => $error,
         ];
         if (!empty($errorMessages)) {
-            $response['data'] = $errorMessages;
+            $response['validate'] = $errorMessages;
         }
         return response()->json($response, $code);
     }

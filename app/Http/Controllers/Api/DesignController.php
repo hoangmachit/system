@@ -19,9 +19,13 @@ class DesignController extends Controller
      */
     public function index(Request $request)
     {
-        $page = $request->page ?? config('page.design');
-        $designs = Designs::paginate($page);
-        return sendResponse(new DesignResource($designs), "Design retrieved successfully.");
+        $designs = Designs::orderBy('id', 'asc')->get();
+        return sendResponse(
+            [
+                'designs' => $designs
+            ],
+            "Design retrieved successfully."
+        );
     }
 
     /**
@@ -42,11 +46,11 @@ class DesignController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        $data = $request->get('design');
         $roles  = $this->roles();
         $validator = Validator::make($data, $roles);
         if ($validator->fails()) {
-            return sendError('Validation Error.', $validator->errors());
+            return sendError('Validation Error.', $validator->errors(), 200);
         }
         $data['font_family'] = !empty($data['font_family']) ? $data['font_family'] : "";
         $data['url_example'] = !empty($data['url_example']) ? $data['url_example'] : "";
@@ -110,7 +114,7 @@ class DesignController extends Controller
         $roles  = $this->roles();
         $validator = Validator::make($data, $roles);
         if ($validator->fails()) {
-            return sendError('Validation Error.', $validator->errors());
+            return sendError('Validation Error.', $validator->errors(), 200);
         }
         $design->first_name  = !empty($data['first_name']) ? $data['first_name'] : "";
         $design->last_name   = !empty($data['last_name'])  ? $data['last_name'] : "";
